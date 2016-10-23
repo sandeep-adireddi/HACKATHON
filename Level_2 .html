@@ -29,11 +29,18 @@ div#memory_board > div{
 
 }
 </style>
+<script type="text/javascript">
+function sleep(milliSeconds){
+var startTime = new Date().getTime(); // get the current time
+
+while (new Date().getTime() < startTime + milliSeconds); // hog cpu
+
+}
+</script>
 <script>
-// Scripted By Adam Khoury in connection with the following video tutorial:
-// http://www.youtube.com/watch?v=c_ohDPWmsM0	
-var memory_array = ['-33','INT','B','CHAR','0.9','FLOAT','33*10^60','LONG LONG INT','+33','UNSIGN INT','GAME ON','STRING','[33,69,99]','ARRAY','TRUE','BOOL','0x0023F F74','POINTER','3*10^31', 'LONG INT'];
-var memory_array_temp=['-33','INT','B','CHAR','0.9','FLOAT','33*10^60','LONG LONG INT','+33','UNSIGN INT','GAME ON','STRING','[33,69,99]','ARRAY','TRUE','BOOL','0x0023F F74','POINTER','3*10^31', 'LONG INT'];
+	
+var memory_array = ['Strlen  (hello)','5','Strcmp (hi,me)','False','strrev(str)','rts','pow(2,5)','32','exp(2)','e^2','sqrt(16)','4','abs(-20)','20','stdlib.h','malloc','cos(1.570)','0.0007','round(2.6)', '3'];
+var memory_array_temp=['Strlen (hello)','5','Strcmp (hi,me)','False','strrev(str)','rts','pow(2,5)','32','exp(2)','e^2','sqrt(16)','4','abs(-20)','20','stdlib.h','malloc','cos(1.570)','0.0007','round(2.6)', '3'];
 var memory_values = [];
 var memory_tile_ids = [];
 var tiles_flipped = 0;
@@ -80,10 +87,11 @@ function memoryFlipTile(tile,val){
             	memory_tile_ids = [];
 				// Check to see if the whole board is cleared
 				if(tiles_flipped == memory_array.length){
-					//await sleep(1000);
+					setTimeout(function(){
+					
 					alert("Board cleared... generating new board");
 					document.getElementById('memory_board').innerHTML = "";
-					newBoard();
+					newBoard();},1000);
 				}
 			} else {
 				function flip2Back(){
@@ -107,6 +115,7 @@ function memoryFlipTile(tile,val){
 </script>
 </head>
 <body background="bb.JPG">
+	<h1 style="color:brown;"><font size="10"> <center>Blank</center></font></h1>
 <div id="memory_board"></div>
 <script>newBoard();</script>
 </body>

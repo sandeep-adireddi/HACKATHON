@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+div#memory_board{
+	background: linear-gradient(#603813, #b29f94);
+	border:#999 1px solid;
+	width:540px;
+	height:650px;
+	padding:24px;
+	margin:0px auto;
+	border-radius: 10px;
+	 box-shadow: 10px 10px;
+	 opacity: 0.7;
+}
+div#memory_board > div{
+	background:#8D6E63;
+	border:#000 1px solid;
+	width:70px;
+	height:70px;
+	border-radius: 10px;
+	float:left;
+	 box-shadow: 10px 10px;
+	margin:10px;
+	padding:20px;
+	font-size:20px;
+	cursor:pointer;
+	text-align:center;
+
+}
+</style>
+<script type="text/javascript">
+function sleep(milliSeconds){
+var startTime = new Date().getTime(); // get the current time
+
+while (new Date().getTime() < startTime + milliSeconds); // hog cpu
+
+}
+</script>
+<script>
+	
+var memory_array = ['-33','INT','B','CHAR','0.9','FLOAT','33*10^60','LONG LONG INT','+33','UNSIGN INT','GAME ON','STRING','[33,69,99]','ARRAY','TRUE','BOOL','0x0023F F74','POINTER','3*10^31', 'LONG INT'];
+var memory_array_temp=['-33','INT','B','CHAR','0.9','FLOAT','33*10^60','LONG LONG INT','+33','UNSIGN INT','GAME ON','STRING','[33,69,99]','ARRAY','TRUE','BOOL','0x0023F F74','POINTER','3*10^31', 'LONG INT'];
+var memory_values = [];
+var memory_tile_ids = [];
+var tiles_flipped = 0;
+Array.prototype.memory_tile_shuffle = function(){
+    var i = this.length, j, temp;
+    while(--i > 0){
+        j = Math.floor(Math.random() * (i+1));
+        temp = this[j];
+        this[j] = this[i];
+        this[i] = temp;
+    }
+}
+function newBoard(){
+	tiles_flipped = 0;
+	var output = '';
+    memory_array.memory_tile_shuffle();
+	for(var i = 0; i < memory_array.length; i++){
+		output += '<div id="tile_'+i+'" onclick="memoryFlipTile(this,\''+memory_array[i]+'\')"></div>';
+	}
+	document.getElementById('memory_board').innerHTML = output;
+}
+function memoryFlipTile(tile,val){
+	var flag=false;
+	if(tile.innerHTML == "" && memory_values.length < 2){
+		tile.style.background = '#FFF';
+		tile.innerHTML = val;
+		if(memory_values.length == 0){
+			memory_values.push(memory_array_temp.indexOf(val));
+			memory_tile_ids.push(tile.id);
+		} else if(memory_values.length == 1){
+			memory_values.push(memory_array_temp.indexOf(val));
+			memory_tile_ids.push(tile.id);
+			if(memory_values[0]%2==0&&memory_values[0] +1== memory_values[1])
+				{flag=true;}
+			else if(memory_values[0]%2==1&&memory_values[0]-1 == memory_values[1])
+				{flag=true;}
+			else
+				{flag=false;}
+			if(flag==true){
+
+				tiles_flipped += 2;
+				// Clear both arrays
+				memory_values = [];
+            	memory_tile_ids = [];
+				// Check to see if the whole board is cleared
+				if(tiles_flipped == memory_array.length){
+					setTimeout(function(){
+					
+					alert("Board cleared... generating new board");
+					document.getElementById('memory_board').innerHTML = "";
+					newBoard();},1000);
+				}
+			} else {
+				function flip2Back(){
+					flag=false;
+				    // Flip the 2 tiles back over
+				    var tile_1 = document.getElementById(memory_tile_ids[0]);
+				    var tile_2 = document.getElementById(memory_tile_ids[1]);
+				    tile_1.style.background = ' #8D6E63';
+            	    tile_1.innerHTML = "";
+				    tile_2.style.background = ' #8D6E63';
+            	    tile_2.innerHTML = "";
+				    // Clear both arrays
+				    memory_values = [];
+            	    memory_tile_ids = [];
+				}
+				setTimeout(flip2Back, 500);
+			}
+		}
+	}
+}
+</script>
+</head>
+<body background="bb.JPG">
+	<h1 style="color:brown;"><font size="10"> <center>Blank</center></font></h1>
+<div id="memory_board"></div>
+<script>newBoard();</script>
+</body>
+</html>

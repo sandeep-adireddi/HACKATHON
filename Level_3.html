@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+div#memory_board{
+	background: linear-gradient(#603813, #b29f94);
+	border:#999 1px solid;
+	width:500px;
+	height:820px;
+	padding:24px;
+	margin:0px auto;
+	border-radius: 10px;
+	 box-shadow: 10px 10px;
+	 opacity: 0.7;
+}
+div#memory_board > div{
+	background:#8D6E63;
+	border:#000 1px solid;
+	width:440px;
+	height:40px;
+	border-radius: 10px;
+	float:left;
+	 box-shadow: 10px 10px;
+	margin:10px;
+	padding:20px;
+	font-size:20px;
+	cursor:pointer;
+	text-align:center;
+
+}
+</style>
+<script>
+// Scripted By Adam Khoury in connection with the following video tutorial:
+// http://www.youtube.com/watch?v=c_ohDPWmsM0	
+var memory_array = ['if(n%2=0) print(even);','else print(odd) ','while(i less than length(array))','print(array[i])','sacn(radius)','print(3.14*r^2)','while(num!=0)',' rem = num % 10; sum = sum + pow(rem,3); num = num / 10;'];//'LONG LONG INT','+33','UNSIGN INT','GAME ON','STRING','[33,69,99]','ARRAY','TRUE','BOOL','0x0023F F74','POINTER','3*10^31', 'LONG INT'];
+var memory_array_temp= ['if(n%2=0) print(even);','else print(odd) ','while(i<length(array))','print(array[i])','sacn(radius)','print(3.14*r^2)','while(num!=0)',' rem = num % 10; sum = sum + pow(rem,3); num = num / 10;'];
+var memory_values = [];
+var memory_tile_ids = [];
+var tiles_flipped = 0;
+Array.prototype.memory_tile_shuffle = function(){
+    var i = this.length, j, temp;
+    while(--i > 0){
+        j = Math.floor(Math.random() * (i+1));
+        temp = this[j];
+        this[j] = this[i];
+        this[i] = temp;
+    }
+}
+function newBoard(){
+	tiles_flipped = 0;
+	var output = '';
+    memory_array.memory_tile_shuffle();
+	for(var i = 0; i < memory_array.length; i++){
+		output += '<div id="tile_'+i+'" onclick="memoryFlipTile(this,\''+memory_array[i]+'\')"></div>';
+	}
+	document.getElementById('memory_board').innerHTML = output;
+}
+function memoryFlipTile(tile,val){
+	var flag=false;
+	if(tile.innerHTML == "" && memory_values.length < 2){
+		tile.style.background = '#FFF';
+		tile.innerHTML = val;
+		if(memory_values.length == 0){
+			memory_values.push(memory_array_temp.indexOf(val));
+			memory_tile_ids.push(tile.id);
+		} else if(memory_values.length == 1){
+			memory_values.push(memory_array_temp.indexOf(val));
+			memory_tile_ids.push(tile.id);
+			if(memory_values[0]%2==0&&memory_values[0] +1== memory_values[1])
+				{flag=true;}
+			else if(memory_values[0]%2==1&&memory_values[0]-1 == memory_values[1])
+				{flag=true;}
+			else
+				{flag=false;}
+			if(flag==true){
+
+				tiles_flipped += 2;
+				// Clear both arrays
+				memory_values = [];
+            	memory_tile_ids = [];
+				// Check to see if the whole board is cleared
+				if(tiles_flipped == memory_array.length){
+					//await sleep(1000);
+					alert("Board cleared... generating new board");
+					document.getElementById('memory_board').innerHTML = "";
+					newBoard();
+				}
+			} else {
+				function flip2Back(){
+					flag=false;
+				    var tile_1 = document.getElementById(memory_tile_ids[0]);
+				    var tile_2 = document.getElementById(memory_tile_ids[1]);
+				    tile_1.style.background = ' #8D6E63';
+            	    tile_1.innerHTML = "";
+				    tile_2.style.background = ' #8D6E63';
+            	    tile_2.innerHTML = "";
+				    memory_values = [];
+            	    memory_tile_ids = [];
+				}
+				setTimeout(flip2Back, 500);
+			}
+		}
+	}
+}
+</script>
+</head>
+<body background="bb.JPG">
+<h1 style = "color:brown;"><font size="10"><center>Blank</center></font></h1>
+<div id="memory_board"></div>
+<p  style="color:white"><font size=8>
+1.Write an if condition to print if  n is even .<br>
+2.Loop throught array to  print values in array.<br>
+3.Find area for a circle given radius.<br>
+4.Check given number is Amstrong or not.<br> 
+ </font></p>
+<script>newBoard();</script>
+</body>
+</html>
