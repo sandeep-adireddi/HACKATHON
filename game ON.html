@@ -3,24 +3,30 @@
 <head>
 <style>
 div#memory_board{
-	background:#CCC;
+	background: linear-gradient(#603813, #b29f94);
 	border:#999 1px solid;
-	width:580px;
+	width:540px;
 	height:650px;
 	padding:24px;
 	margin:0px auto;
+	border-radius: 10px;
+	 box-shadow: 10px 10px;
+	 opacity: 0.7;
 }
 div#memory_board > div{
-	background: url(tile_bg.jpg) no-repeat;
+	background:#8D6E63;
 	border:#000 1px solid;
-	width:71px;
-	height:71px;
+	width:70px;
+	height:70px;
+	border-radius: 10px;
 	float:left;
+	 box-shadow: 10px 10px;
 	margin:10px;
 	padding:20px;
 	font-size:20px;
 	cursor:pointer;
 	text-align:center;
+
 }
 </style>
 <script>
@@ -74,7 +80,7 @@ function memoryFlipTile(tile,val){
             	memory_tile_ids = [];
 				// Check to see if the whole board is cleared
 				if(tiles_flipped == memory_array.length){
-					await sleep(1000);
+					//await sleep(1000);
 					alert("Board cleared... generating new board");
 					document.getElementById('memory_board').innerHTML = "";
 					newBoard();
@@ -85,9 +91,9 @@ function memoryFlipTile(tile,val){
 				    // Flip the 2 tiles back over
 				    var tile_1 = document.getElementById(memory_tile_ids[0]);
 				    var tile_2 = document.getElementById(memory_tile_ids[1]);
-				    tile_1.style.background = 'url(tile_bg.jpg) no-repeat';
+				    tile_1.style.background = ' #8D6E63';
             	    tile_1.innerHTML = "";
-				    tile_2.style.background = 'url(tile_bg.jpg) no-repeat';
+				    tile_2.style.background = ' #8D6E63';
             	    tile_2.innerHTML = "";
 				    // Clear both arrays
 				    memory_values = [];
@@ -100,7 +106,7 @@ function memoryFlipTile(tile,val){
 }
 </script>
 </head>
-<body>
+<body background="bb.JPG">
 <div id="memory_board"></div>
 <script>newBoard();</script>
 </body>
